@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{
+            width:200px;
+            height:200px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // function Promise(){
+        //     this.status='pending';
+        //     this.msg='';
+        //     var peocess=arguments[0];
+        //     var that=this;
+        //     process(function(){
+        //         that.status='resolve';
+        //         that.msg=arguments[0];
+        //     },function(){
+        //         that.status='reject';
+        //         that.msg=arguments[0]
+        //     })
+        //     return this;
+        // }
+        // Promise.prototype.then=function(){
+        //     if(this.status=='resolve'){
+        //         arguments[0](this.msg)
+        //     }
+        // }
+        // console.log(Promise)
+
+
+     //依次加载
+     let loadImg=(src)=>{
+         return new Promise((resolve,reject)=>{
+             let img=document.createElement('img');
+             img.src=src
+             document.body.append(img)
+             setTimeout(()=>{
+                 resolve(true)
+             },1000)
+         })
+     }
+     const imgs=['http://img3.imgtn.bdimg.com/it/u=66659062,1136264123&fm=26&gp=0.jpg',
+     'http://img1.imgtn.bdimg.com/it/u=1659156971,2299751090&fm=26&gp=0.jpg',
+     'http://img3.imgtn.bdimg.com/it/u=1173660142,3891701091&fm=26&gp=0.jpg',
+     'http://img0.imgtn.bdimg.com/it/u=3365145302,1608016748&fm=26&gp=0.jpg',
+     'http://img2.imgtn.bdimg.com/it/u=350036668,48219220&fm=26&gp=0.jpg']
+     async function fSync(imgs){
+         for(let i of imgs){
+             await loadImg(i)
+         }
+     }
+     fSync(imgs)
+      
+
+
+        // 并行加载
+        var imga = ['http://img1.imgtn.bdimg.com/it/u=1988389369,3685696270&fm=26&gp=0.jpg',
+                    'http://img4.imgtn.bdimg.com/it/u=270983881,3593042199&fm=26&gp=0.jpg',
+                    'http://img5.imgtn.bdimg.com/it/u=1200889471,2010793696&fm=26&gp=0.jpg'
+                    ]
+        var loadImgAsync = (imga)=>{
+            imga.forEach(async (item)=>{
+                let img = await loadImg(item)
+                document.body.appendChild(img)
+            })
+        }
+        loadImgAsync(imga)
+    </script>
+</body>
+</html>
